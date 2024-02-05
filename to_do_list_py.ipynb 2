@@ -1,0 +1,128 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyPwwFyZw7tOc7tUcljthMQU",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/Kundrapujyothi/codsoft/blob/main/to_do_list_py.ipynb%202\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "YHbRAUsjDHzj",
+        "outputId": "be10769e-eb7d-49c8-9cd0-dd64d3def2bd"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "\n",
+            "Options:\n",
+            "1. Display To-Do List\n",
+            "2. Add Task\n",
+            "3. Remove Task\n",
+            "4. Save To-Do List\n",
+            "5. Quit\n"
+          ]
+        }
+      ],
+      "source": [
+        "import os\n",
+        "\n",
+        "\n",
+        "def display_tasks(task_list):\n",
+        "    if not task_list:\n",
+        "        print(\"Your to-do list is empty.\")\n",
+        "    else:\n",
+        "        print(\"To-Do List:\")\n",
+        "        for i, task in enumerate(task_list, start=1):\n",
+        "            print(f\"{i}. {task}\")\n",
+        "\n",
+        "def add_task(task_list, task):\n",
+        "    task_list.append(task)\n",
+        "    print(f\"Task '{task}' added to the to-do list.\")\n",
+        "\n",
+        "\n",
+        "def remove_task(task_list, index):\n",
+        "    if 1 <= index <= len(task_list):\n",
+        "        removed_task = task_list.pop(index - 1)\n",
+        "        print(f\"Task '{removed_task}' removed from the to-do list.\")\n",
+        "    else:\n",
+        "        print(\"Invalid task index. Please try again.\")\n",
+        "\n",
+        "\n",
+        "def save_to_file(task_list, filename):\n",
+        "    with open(filename, 'w') as file:\n",
+        "        for task in task_list:\n",
+        "            file.write(task + '\\n')\n",
+        "        print(\"To-Do List saved to\", filename)\n",
+        "\n",
+        "\n",
+        "def load_from_file(filename):\n",
+        "    task_list = []\n",
+        "    if os.path.isfile(filename):\n",
+        "        with open(filename, 'r') as file:\n",
+        "            task_list = [line.strip() for line in file.readlines()]\n",
+        "    return task_list\n",
+        "\n",
+        "def main():\n",
+        "    filename = \"todo.txt\"\n",
+        "    task_list = load_from_file(filename)\n",
+        "\n",
+        "    while True:\n",
+        "        print(\"\\nOptions:\")\n",
+        "        print(\"1. Display To-Do List\")\n",
+        "        print(\"2. Add Task\")\n",
+        "        print(\"3. Remove Task\")\n",
+        "        print(\"4. Save To-Do List\")\n",
+        "        print(\"5. Quit\")\n",
+        "\n",
+        "        choice = input(\"Enter your choice: \")\n",
+        "\n",
+        "        if choice == '1':\n",
+        "            display_tasks(task_list)\n",
+        "        elif choice == '2':\n",
+        "            task = input(\"Enter a new task: \")\n",
+        "            add_task(task_list, task)\n",
+        "        elif choice == '3':\n",
+        "            index = int(input(\"Enter the index of the task to remove: \"))\n",
+        "            remove_task(task_list, index)\n",
+        "        elif choice == '4':\n",
+        "            save_to_file(task_list, filename)\n",
+        "        elif choice == '5':\n",
+        "            print(\"Goodbye!\")\n",
+        "            break\n",
+        "        else:\n",
+        "            print(\"Invalid choice. Please try again.\")\n",
+        "\n",
+        "if __name__ == \"__main__\":\n",
+        "    main()"
+      ]
+    }
+  ]
+}
